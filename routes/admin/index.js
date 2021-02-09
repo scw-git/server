@@ -5,6 +5,8 @@ module.exports = (app) => {
     require('./api/type')(app)//引入类型接口
     require('./api/product')(app)//引入商品接口
     require('./api/user')(app)//引入用户接口
+    require('./api/shoppingItem')(app)
+    require('./api/address')(app)
 
 
     //上传的图片，需要下一个库 npm i multer

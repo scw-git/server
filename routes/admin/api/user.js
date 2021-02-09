@@ -29,8 +29,19 @@ module.exports = app => {
         }
     })
     router.get('/user', async (req, res) => {
-        const model = await user.find()
+        const userName = req.query.userName
+        const obj = req.query.userName ? { userName } : {}
+        const model = await user.find(obj)
         res.send(model)
+    })
+    router.put('/updatePw', async (req, res) => {
+        const userName = req.body.userName
+        await user.findOneAndUpdate({ userName }, { pw: req.body.pw })
+        res.send({
+            status: 200,
+            msg: '修改成功'
+        })
+
     })
     router.delete('/delUser', async (req, res) => {
         // console.log(req.query.id)
@@ -59,9 +70,6 @@ module.exports = app => {
                 res.send(result)
             }
         }
-        console.log(result)
-        // const model = await user.create(req.body)
-        // res.send(model)
     })
 
 
