@@ -27,6 +27,13 @@ module.exports = app => {
         res.send(data)
         // console.log(data)
     })
+    router.get('/delAllShoppingItem', async (req, res) => {
+        await shoppingItem.remove()
+        res.send({
+            status: 200,
+            msg: '已经删除了所有购物车的商品',
+        })
+    })
 
     router.delete('/shoppingItem', async (req, res) => {
         await shoppingItem.findByIdAndDelete(req.query.id)
