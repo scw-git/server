@@ -38,6 +38,9 @@ module.exports = app => {
             .skip(start)
         data.count = count
         res.send({ data, count, limit, currentPage, total })
+        // res.send({
+        //     status: 200
+        // })
     })
     //更新接口
     router.put('/product', async (req, res) => {

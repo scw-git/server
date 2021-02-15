@@ -14,6 +14,14 @@ module.exports = app => {
         res.send(data)
         // console.log(data)
     })
+    router.delete('/delOrder', async (req, res) => {
+        const id = req.query.id
+        await order.findByIdAndDelete(id)
+        res.send({
+            status: 200,
+            msg: '删除订单成功'
+        })
+    })
 
     //更新支付状态
     router.put('/updateOrder', async (req, res) => {
