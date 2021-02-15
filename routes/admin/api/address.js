@@ -6,6 +6,7 @@ module.exports = app => {
 
     router.post('/address', async (req, res) => {
         const userName = req.body.userName
+        // findOne 或者 findOneAndUpdate第一个参数都是对象。findByIdAndUpdate，字符串即可。
         const data = await address.findOne({ userName })
         if (data) {
             await address.findOneAndUpdate({ userName }, req.body, { 'new': true })

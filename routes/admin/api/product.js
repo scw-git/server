@@ -22,10 +22,7 @@ module.exports = app => {
 
         let recommend = req.query.recommend//查询推荐商品
         let obj2 = req.query.recommend ? { recommend } : {}
-
-        // let obj = req.query.type ? obj1 : obj2
         let obj = { ...obj1, ...obj2 }
-        // console.log(obj)
 
         let currentPage = req.query.currentPage || 1 //客户端传过来的当前页
         let limit = (req.query.limit) * 1 || null //每一页显示的条数，limit要转化为数字类型
@@ -36,11 +33,9 @@ module.exports = app => {
             .find(obj)
             .limit(limit)
             .skip(start)
+            .sort({ $natural: -1 })
         data.count = count
         res.send({ data, count, limit, currentPage, total })
-        // res.send({
-        //     status: 200
-        // })
     })
     //更新接口
     router.put('/product', async (req, res) => {

@@ -1,3 +1,4 @@
+const { findOneAndUpdate } = require('../../../models/shoppingItem')
 
 module.exports = app => {
     const express = require('express')
@@ -26,6 +27,15 @@ module.exports = app => {
         const data = await shoppingItem.find({ userName })
         res.send(data)
         // console.log(data)
+    })
+    //更新购买数量
+    router.put('/updateShoppingItem', async (req, res) => {
+        const count = req.body.count
+        // findOne 或者 findOneAndUpdate第一个参数都是对象。findByIdAndUpdate，字符串即可。
+        await shoppingItem.findByIdAndUpdate(req.body.id, { count }, { 'new': true })
+        res.send({
+            msg: 'ok'
+        })
     })
     router.get('/delAllShoppingItem', async (req, res) => {
         await shoppingItem.remove()
