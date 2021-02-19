@@ -15,6 +15,22 @@ module.exports = app => {
         let data = await product.findById(id)
         res.send(data)
     })
+    //搜索接口
+    router.get('/searchProduct', async (req, res) => {
+        console.log(req.query.searchValue)
+        const searchValue = eval('/' + req.query.searchValue + '/i')
+        const data1 = await product.find({ name: searchValue })
+        const data2 = await product.find({ type: searchValue })
+        if (data1.length > 0) {
+            for (let i of data1) {
+                data2.push(i)
+            }
+        }
+        console.log(data1)
+        console.log(data2)
+        res.send(data2)
+
+    })
     //商品查询接口
     router.get('/product', async (req, res) => {
         let type = req.query.type//查询指定字段：{type:'手机'}
@@ -37,10 +53,15 @@ module.exports = app => {
         data.count = count
         res.send({ data, count, limit, currentPage, total })
     })
-    //更新接口
+    //更新接口(给后端的)
     router.put('/product', async (req, res) => {
         const model = await product.findByIdAndUpdate(req.body._id, req.body)
         res.send(model)
+    })
+    //更新库存接口(给前端的)
+    router.put('/updateInventory', async (req, res) => {
+        await product.findByIdAndUpdate(req.body.id, { count: req.body.count }, { 'new': true })
+        res.send({ status: 200, msg: 'ok' })
     })
     //删除接口
     router.delete('/product', async (req, res) => {

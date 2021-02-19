@@ -10,7 +10,8 @@ module.exports = app => {
     })
     router.get('/getOrder', async (req, res) => {
         const userName = req.query.userName
-        const data = await order.find({ userName }).sort({ $natural: -1 })
+        let obj = userName ? { userName } : {}
+        const data = await order.find(obj).sort({ $natural: -1 })
         res.send(data)
         // console.log(data)
     })
