@@ -1,6 +1,8 @@
 
 //前端的用户，后台没有
 module.exports = app => {
+
+    const { createToken, verifyToken } = require('../../../utils/jwt')
     const express = require('express')
     const router = express.Router()//设置一级路由
     app.use('/admin/api', router)
@@ -67,6 +69,12 @@ module.exports = app => {
                     err: '账号或密码错误'
                 })
             } else {
+                // //生成token
+                // let token = createToken(req.body)
+                // // 印证token
+                // let data = verifyToken(token)
+                // console.log(1, token)
+                // console.log(2, data)
                 res.send(result)
             }
         }
